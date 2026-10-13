@@ -215,3 +215,13 @@ function backToStart(){
 </script>
 </body>
 </html>
+  box.innerHTML="<h3>📚 Semak Jawapan</h3>"+missions.map((m,i)=>`<p><strong>${i+1}. ${m.title}</strong><br>${m.sentence.replace("_____","<u>"+m.options[m.answer]+"</u>")}<br><span class="small">${m.explain}</span></p>`).join("");
+  box.classList.toggle("hidden");
+}
+function restartGame(){ $("resultScreen").classList.add("hidden");startGame(); }
+function backToStart(){
+  $("gameScreen").classList.add("hidden");$("resultScreen").classList.add("hidden");$("startScreen").classList.remove("hidden");
+}
+</script>
+</body>
+</html>
