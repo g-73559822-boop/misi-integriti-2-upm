@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misi Integriti: Wira Bahasa Tahun 2</title>
+<style>
+  :root{
+    --navy:#15254b; --blue:#3578f6; --cyan:#5ee7f5; --yellow:#ffd84d;
+    --pink:#ff6fae; --green:#29c88a; --red:#ff647c; --white:#fff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:"Trebuchet MS",Arial,sans-serif; color:#17264a;
+    background:radial-gradient(circle at 15% 10%,#fff6bd 0 7%,transparent 23%),
+      radial-gradient(circle at 90% 15%,#c7f7ff 0 9%,transparent 25%),
+      linear-gradient(135deg,#d9f6ff,#e8e0ff 55%,#ffe1ee);
+    min-height:100vh;
+  }
+  .wrap{width:min(980px,94%);margin:0 auto;padding:20px 0 38px}
+  header{text-align:center;padding:10px 8px 16px}
+  .eyebrow{display:inline-block;background:#15254b;color:white;border:3px solid #fff;border-radius:999px;padding:7px 16px;font-size:.85rem;font-weight:900;letter-spacing:1px;box-shadow:0 5px 0 #0c1734}
+  h1{font-size:clamp(2rem,6vw,3.7rem);line-height:1.02;margin:16px 0 8px;color:#20336a;text-shadow:3px 3px 0 #fff}
+  .subtitle{font-size:1.05rem;font-weight:800;color:#42517c}
+  .hud{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+  .pill{background:#fff;border:3px solid #dce7ff;border-radius:16px;padding:10px 15px;font-weight:900;box-shadow:0 4px 0 #c2cffa}
+  .pill span{color:#2769dc}
+  .panel{background:rgba(255,255,255,.94);border:4px solid #fff;border-radius:26px;padding:clamp(18px,4vw,30px);box-shadow:0 10px 0 rgba(50,74,140,.14),0 18px 35px rgba(40,57,115,.12);margin:16px 0}
+  .mission-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .tag{background:#fff1a9;border:2px solid #ffcf38;border-radius:10px;padding:6px 11px;font-weight:900}
+  h2{margin:8px 0 12px;font-size:clamp(1.4rem,4vw,2rem)}
+  p{line-height:1.55}
+  .progress{height:14px;background:#e7edff;border-radius:99px;overflow:hidden;margin:12px 0 20px;border:2px solid #d6e0ff}
+  .bar{height:100%;width:0;background:linear-gradient(90deg,#28c78b,#8ce95d);transition:width .3s}
+  .story{background:#eef8ff;border:2px dashed #9cc9ff;border-radius:18px;padding:15px;margin:14px 0;font-size:1.05rem}
+  .question{font-size:clamp(1.15rem,3vw,1.45rem);font-weight:900;line-height:1.5;margin:18px 0 8px}
+  .hint{color:#596687;font-size:.95rem;margin-top:0}
+  .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+  button{font:inherit;cursor:pointer;border:0;transition:transform .12s,filter .12s}
+  .choice{background:#f4f6ff;border:3px solid #dce3ff;border-radius:17px;padding:15px 12px;font-weight:900;color:#25345f;min-height:66px;box-shadow:0 5px 0 #c9d4f5}
+  .choice:hover{transform:translateY(-2px);filter:brightness(1.02)}
+  .choice:focus-visible,.btn:focus-visible{outline:4px solid #ffbd30;outline-offset:3px}
+  .choice.correct{background:#d8ffeb;border-color:#29c88a;box-shadow:0 5px 0 #92e8c2}
+  .choice.wrong{background:#ffe3e8;border-color:#ff8295;box-shadow:0 5px 0 #ffc0ca}
+  .choice:disabled{cursor:default}
+  .feedback{min-height:58px;border-radius:15px;padding:12px 14px;font-weight:800;background:#f5f7ff;border:2px solid #e1e7ff}
+  .feedback.good{background:#e2fff0;border-color:#9be7bf;color:#146744}
+  .feedback.try{background:#fff0f2;border-color:#ffc1cb;color:#9b2940}
+  .actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .btn{padding:13px 20px;border-radius:14px;font-weight:900}
+  .primary{background:linear-gradient(135deg,#397cff,#654ef2);color:#fff;box-shadow:0 5px 0 #2c43b0}
+  .secondary{background:#edf1ff;color:#293d79;box-shadow:0 5px 0 #cbd4f5}
+  .btn:active{transform:translateY(2px);box-shadow:none}
+  .hidden{display:none!important}
+  .avatar{font-size:3rem;display:inline-grid;place-items:center;width:82px;height:82px;border-radius:24px;background:#fff0a9;border:3px solid white;box-shadow:0 5px 0 #e9c64a;margin:4px}
+  .intro-grid{display:grid;grid-template-columns:1fr auto;align-items:center;gap:14px}
+  .rules{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .rules span{background:#f0f4ff;padding:8px 10px;border-radius:12px;font-weight:800}
+  .result-score{font-size:clamp(2.7rem,8vw,4.5rem);font-weight:1000;color:#3578f6;line-height:1}
+  .badge{font-size:4rem}
+  .small{font-size:.85rem;color:#677391}
+  footer{text-align:center;color:#53618a;font-size:.85rem;padding:8px}
+  @media(max-width:560px){.choices{grid-template-columns:1fr}.intro-grid{grid-template-columns:1fr;text-align:center}.actions .btn{flex:1}.panel{border-radius:21px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">🎮 PERMAINAN BAHASA • TAHUN 2</div>
+    <h1>🏅 MISI INTEGRITI: 2 UPM</h1>
+    <div class="subtitle">Wira Bahasa: Amalan Baik di Sekolah</div>
+    <div class="hud">
+      <div class="pill">⭐ Mata: <span id="score">0</span></div>
+      <div class="pill">🗺️ Misi: <span id="missionCount">0/8</span></div>
+      <div class="pill">💎 Lencana: <span id="badgeCount">0</span></div>
+    </div>
+  </header>
+
+  <section class="panel" id="startScreen">
+    <div class="intro-grid">
+      <div>
+        <span class="tag">MISI ANDA</span>
+        <h2>Jadilah Wira Bahasa! 🦸</h2>
+        <p>Alamak! Beberapa ayat di Sekolah Integriti menggunakan perkataan yang kurang tepat. Bantu cikgu membaiki ayat supaya menjadi betul dan jelas.</p>
+        <p><strong>Objektif permainan:</strong> Murid dapat memilih perkataan yang tepat untuk mengedit dan memurnikan ayat tentang amalan baik di sekolah.</p>
+      </div>
+      <div class="avatar" aria-label="wira">🦸‍♀️</div>
+    </div>
+    <div class="rules">
+      <span>📖 Baca ayat</span><span>🔎 Cari kata yang tepat</span><span>⭐ Kumpul mata</span><span>🏆 Dapatkan lencana</span>
+    </div>
+    <div class="story"><strong>Tip Wira:</strong> Baca semua pilihan dahulu. Pilih perkataan yang menjadikan ayat lebih tepat. Tidak mengapa jika tersilap — cuba lagi dan belajar!</div>
+    <button class="btn primary" onclick="startGame()">MULA MISI 🚀</button>
+  </section>
+
+  <section class="panel hidden" id="gameScreen">
+    <div class="mission-top">
+      <span class="tag" id="levelTag">MISI 1</span>
+      <span class="small">Jawab dengan teliti, wira!</span>
+    </div>
+    <div class="progress" aria-label="Kemajuan permainan"><div class="bar" id="progressBar"></div></div>
+    <h2 id="missionTitle">Misi di sekolah</h2>
+    <div class="story" id="scene">🏫 Selamat datang ke Sekolah Integriti!</div>
+    <div class="question" id="question">Pilih perkataan yang paling tepat.</div>
+    <p class="hint" id="hint">Pilih satu jawapan.</p>
+    <div class="choices" id="choices"></div>
+    <div class="feedback" id="feedback" aria-live="polite">💡 Pilih jawapan kamu untuk meneruskan misi.</div>
+    <div class="actions">
+      <button class="btn secondary" onclick="backToStart()">🏠 Menu</button>
+      <button class="btn primary" id="nextBtn" onclick="nextQuestion()" disabled>Seterusnya ➜</button>
+    </div>
+  </section>
+
+  <section class="panel hidden" id="resultScreen">
+    <div style="text-align:center">
+      <div class="badge" id="resultEmoji">🏆</div>
+      <h2 id="resultTitle">Syabas, Wira Bahasa!</h2>
+      <div class="result-score"><span id="finalScore">0</span><span style="font-size:1.2rem;color:#647195"> / 80 mata</span></div>
+      <p id="resultMessage">Kamu telah menyelesaikan semua misi.</p>
+      <div class="story" id="learningNote"></div>
+      <button class="btn primary" onclick="restartGame()">🔁 Main Semula</button>
+      <button class="btn secondary" onclick="showAnswers()">📚 Lihat Jawapan</button>
+      <div id="answerReview" class="hidden" style="text-align:left;margin-top:16px"></div>
+    </div>
+  </section>
+  <footer>Standard Pembelajaran: 3.3.2 (iii) • Mengedit dan memurnikan penulisan daripada aspek penggunaan kata</footer>
+</div>
+<script>
+const missions = [
+  {title:"Misi 1: Sudut Bacaan", scene:"📚 Rakan-rakan menjaga buku di sudut bacaan.", sentence:"Murid-murid perlu _____ buku selepas membacanya.", options:["menyusun","meminum","menyanyi","berlari"], answer:0, explain:"Betul! Buku perlu disusun selepas digunakan. Perkataan “menyusun” paling sesuai."},
+  {title:"Misi 2: Kelas Bersih", scene:"🧹 Loceng tamat rehat berbunyi. Kelas perlu dikemaskan.", sentence:"Kita hendaklah _____ sampah ke dalam tong sampah.", options:["memakai","membuang","membaca","memasak"], answer:1, explain:"Bagus! Kita membuang sampah ke dalam tong sampah untuk menjaga kebersihan."},
+  {title:"Misi 3: Bercakap Sopan", scene:"😊 Kamu mahu meminta pensel daripada rakan.", sentence:"“_____ saya pinjam pensel kamu?”", options:["Lari","Diam","Boleh","Aduh"], answer:2, explain:"Tepat sekali! Ayat “Boleh saya pinjam pensel kamu?” ialah cara yang sopan untuk meminta izin."},
+  {title:"Misi 4: Beratur", scene:"🚶 Murid-murid beratur untuk ke kantin.", sentence:"Murid-murid beratur dengan _____ ketika membeli makanan.", options:["bising","kasar","malas","tertib"], answer:3, explain:"Hebat! “Dengan tertib” bermaksud beratur dengan teratur dan sopan."},
+  {title:"Misi 5: Bercakap Benar", scene:"🧃 Tidak sengaja tertumpahkan air di meja.", sentence:"Saya _____ kepada guru tentang perkara yang berlaku.", options:["bersembunyi","berterus terang","menipu","menjerit"], answer:1, explain:"Ya! Integriti bermaksud bercakap benar dan berani mengaku perkara yang berlaku."},
+  {title:"Misi 6: Membantu Rakan", scene:"🤝 Rakan kamu terjatuh dan bukunya berselerak.", sentence:"Saya _____ rakan mengutip buku yang jatuh.", options:["mengganggu","menolak","membantu","mengejek"], answer:2, explain:"Bagus! Kita membantu rakan yang memerlukan pertolongan."},
+  {title:"Misi 7: Jaga Kemudahan", scene:"🚰 Kamu selesai membasuh tangan di tandas sekolah.", sentence:"Selepas digunakan, paip air perlu _____ dengan rapat.", options:["dibuka","ditendang","dilukis","ditutup"], answer:3, explain:"Betul! Paip air perlu ditutup supaya air tidak dibazirkan."},
+  {title:"Misi 8: Hormati Guru", scene:"🙋 Guru sedang menerangkan pelajaran di hadapan kelas.", sentence:"Kita perlu _____ apabila guru sedang mengajar.", options:["memberi perhatian","bermain bola","bercakap kuat","tidur lena"], answer:0, explain:"Syabas! Memberi perhatian menunjukkan sikap hormat dan membantu kita belajar."}
+];
+let index=0, score=0, answered=0, correctCount=0, earned=new Set(), locked=false;
+const $=id=>document.getElementById(id);
+function startGame(){
+  index=0;score=0;answered=0;correctCount=0;earned=new Set();
+  $("startScreen").classList.add("hidden");$("resultScreen").classList.add("hidden");$("gameScreen").classList.remove("hidden");
+  renderQuestion();updateHUD();
+}
+function renderQuestion(){
+  locked=false;
+  const m=missions[index];
+  $("levelTag").textContent=`MISI ${index+1} / ${missions.length}`;
+  $("missionTitle").textContent=m.title;
+  $("scene").textContent=m.scene;
+  $("question").textContent=m.sentence;
+  $("hint").textContent="Pilih perkataan atau frasa yang paling sesuai untuk melengkapkan ayat.";
+  $("choices").innerHTML="";
+  $("feedback").className="feedback";
+  $("feedback").textContent="💡 Baca ayat dengan teliti, kemudian pilih jawapan.";
+  $("nextBtn").disabled=true;
+  $("nextBtn").textContent=index===missions.length-1?"Lihat Keputusan 🏆":"Seterusnya ➜";
+  $("progressBar").style.width=(index/missions.length*100)+"%";
+  m.options.forEach((opt,i)=>{
+    const b=document.createElement("button");
+    b.className="choice";b.textContent=String.fromCharCode(65+i)+". "+opt;
+    b.onclick=()=>chooseAnswer(i,b);
+    $("choices").appendChild(b);
+  });
+}
+function chooseAnswer(choice,button){
+  if(locked)return;
+  // Jawapan dimuktamadkan selepas satu pilihan; murid tidak boleh cuba semula.
+  locked=true;answered++;
+  const m=missions[index];const buttons=[...$("choices").querySelectorAll("button")];
+  buttons.forEach((b,i)=>{b.disabled=true;if(i===m.answer)b.classList.add("correct");});
+  if(choice===m.answer){
+    score+=10;correctCount++;earned.add(index);
+    $("feedback").className="feedback good";
+    $("feedback").textContent="🌟 "+m.explain+" +10 mata!";
+  }else{
+    button.classList.add("wrong");
+    $("feedback").className="feedback try";
+    $("feedback").textContent="🔒 Jawapan dimuktamadkan. Jawapan yang betul ialah “"+m.options[m.answer]+"”. "+m.explain+" Kamu boleh teruskan ke misi seterusnya.";
+  }
+  $("nextBtn").disabled=false;
+  $("progressBar").style.width=((index+1)/missions.length*100)+"%";
+  updateHUD();
+}
+function nextQuestion(){
+  if(!locked)return;
+  if(index<missions.length-1){index++;renderQuestion();}
+  else showResults();
+}
+function updateHUD(){
+  $("score").textContent=score;
+  $("missionCount").textContent=Math.min(index+(locked?1:0),missions.length)+"/"+missions.length;
+  $("badgeCount").textContent=earned.size;
+}
+function showResults(){
+  $("gameScreen").classList.add("hidden");$("resultScreen").classList.remove("hidden");
+  $("finalScore").textContent=score;
+  $("progressBar").style.width="100%";
+  $("resultEmoji").textContent=score===80?"🏆":score>=50?"🥇":"🌱";
+  $("resultTitle").textContent=score===80?"Hebat! Wira Integriti Sebenar!":score>=50?"Syabas, Wira Bahasa!":"Terus Berusaha, Wira!";
+  $("resultMessage").textContent=`Kamu menjawab ${correctCount} daripada ${missions.length} soalan dengan betul. Kamu memperoleh ${score} mata.`;
+  $("learningNote").textContent=score===80?"Lencana Emas Integriti diperoleh! Kamu bijak memilih kata yang tepat dan mengamalkan nilai murni.":score>=50?"Kamu semakin mahir memilih perkataan yang sesuai. Cuba lagi untuk memperoleh semua 80 mata!":"Setiap cubaan membantu kamu belajar. Baca semula ayat dan cuba permainan sekali lagi.";
+  $("answerReview").classList.add("hidden");
+}
+function showAnswers(){
+  const box=$("answerReview");
+  box.innerHTML="<h3>📚 Semak Jawapan</h3>"+missions.map((m,i)=>`<p><strong>${i+1}. ${m.title}</strong><br>${m.sentence.replace("_____","<u>"+m.options[m.answer]+"</u>")}<br><span class="small">${m.explain}</span></p>`).join("");
+  box.classList.toggle("hidden");
+}
+function restartGame(){ $("resultScreen").classList.add("hidden");startGame(); }
+function backToStart(){
+  $("gameScreen").classList.add("hidden");$("resultScreen").classList.add("hidden");$("startScreen").classList.remove("hidden");
+}
+</script>
+</body>
+</html>
